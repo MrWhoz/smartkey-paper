@@ -2,7 +2,7 @@
 %*********************************** First Chapter *****************************
 %*******************************************************************************
 
-\chapter{Giới thiệu}  %Title of the First Chapter
+\chapter{Tổng quan}  %Title of the First Chapter
 
 \ifpdf
     \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
@@ -12,27 +12,20 @@
 
 
 %********************************** %First Section  **************************************
-\section{Mục tiêu đề tài} %Section - 1.1 
+\section{Mở đầu} %Section - 1.1 
+\subsection{Giới thiệu}
+Ngày nay, xã hội phát triển mạnh mẽ, kỹ thuật ngày càng hiện đại nên nhu cầu về trao đổi thông tin, giải trí, nhu cầu về điều khiển thiết bị từ xa,…ngày càng cao. Và những hệ thống dây cáp phức tạp lại không thể đáp ứng tốt nhu cầu này, nhất là ở những khu vực chật hẹp, những nơi xa xôi, trên các phương tiện vận chuyển,…Vì thế công nghệ không dây đã ra đời và đang phát triển mạnh mẽ, tạo rất nhiều thuận lợi cho con người trong đời sống hằng ngày. Kỹ thuật không dây phục vụ rất nhiều nhu cầu khác nhau của con người, từ nhu cầu làm việc, học tập đến các nhu cầu giải trí như chơi game, xem phim, nghe nhạc, v.v…Với các nhu cầu đa dạng và phức tạp đó, kỹ thuật không dây đã đưa ra nhiều chuẩn với các đặc điểm kỹ thuật khác nhau để có thể phù hợp với từng nhu cầu, mục đích và khả năng của người sử dụng như IrDA, WLAN với chuẩn 802.11, ZigBee, OpenAir, UWB, Bluetooth,…
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry (see 
-Section~\ref{section1.3}). Lorem Ipsum~\citep{Aup91} has been the industry's 
-standard dummy text ever since the 1500s, when an unknown printer took a galley 
-of type and scrambled it to make a type specimen book. It has survived not only 
-five centuries, but also the leap into electronic typesetting, remaining 
-essentially unchanged. It was popularised in the 1960s with the release of 
-Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
-publishing software like Aldus PageMaker including versions of Lorem 
-Ipsum~\citep{AAB95,Con90,LM65}.
+Mỗi chuẩn kỹ thuật đều có những ưu, khuyết điểm riêng của nó, và Bluetooth đang dần nổi lên là kỹ thuật không dây tầm ngắn có nhiều ưu điểm, rất thuận lợi cho những thiết bị di động. Với một tổ chức nghiên cứu đông đảo, hiện đại và số lượng nhà sản xuất hỗ trợ kỹ thuật Bluetooth vào sản phẩm của họ ngày càng tăng, Bluetooth đang dần lan rộng ra khắp thế giới, xâm nhập vào mọi lĩnh vực của thiết bị điện tử và trong tương lai mọi thiết bị điện tử đều có thể được hỗ trợ kỹ thuật này.
+\subsection{Mục tiêu - Phạm vi - Đối tượng nghiên cứu}
 
-The most famous equation in the world: $E^2 = (m_0c^2)^2 + (pc)^2$, which is 
-known as the \textbf{energy-mass-momentum} relation as an in-line equation.
+Xuất phát từ các lý do trình bày ở trên, chúng tôi đã thực hiện đề tài “Thiết kế sản phẩm móc khóa thông minh (Smart Keyring) dựa trên nền tảng công nghệ Bluetooth Low Energy (BLE)”. Mục tiêu của đề tài là:
 
-A {\em \LaTeX{} class file}\index{\LaTeX{} class file@LaTeX class file} is a file, which holds style information for a particular \LaTeX{}.
+- Tìm hiểu về công nghệ Bluetooth
 
+- Kế thiết bị “Móc khóa thông minh - SmartKeyring” sử dụng công nghệ
 
-\begin{align}
-CIF: \hspace*{5mm}F_0^j(a) = \frac{1}{2\pi \iota} \oint_{\gamma} \frac{F_0^j(z)}{z - a} dz
-\end{align}
+Bluetooth và kết nối với ứng dụng Android trên điện thoại.
 
 \nomenclature[z-cif]{$CIF$}{Cauchy's Integral Formula}                                % first letter Z is for Acronyms 
 \nomenclature[a-F]{$F$}{complex function}                                                   % first letter A is for Roman symbols
@@ -45,31 +38,68 @@ CIF: \hspace*{5mm}F_0^j(a) = \frac{1}{2\pi \iota} \oint_{\gamma} \frac{F_0^j(z)}
 
 
 %********************************** %Second Section  *************************************
-\section{Why do we use loren ipsum?} %Section - 1.2
+\section{Tổng quan về công nghệ Bluetooth} %Section - 1.2
 
+\subsection{Khái niệm Bluetooth}
+Bluetooth là công nghệ không dây cho phép các thiết bị điện, điện tử giao tiếp với nhau trong khoảng cách ngắn, bằng sóng vô tuyến qua băng tần chung ISM (Industrial, Scientific, Medical) trong dãy tầng 2.40- 2.48 GHz. Đây là dãy băng tầng không cần đăng ký được dành riêng để dùng cho các thiết bị không dây trong công nghiệp, khoa học, y tế.
 
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using `Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for `lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+Bluetooth được thiết kế nhằm mục đích thay thế dây cable giữa máy tính và các thiết bị truyền thông cá nhân, kết nối vô tuyến giữa các thiết bị điện tử lại với nhau một cách thuận lợi với giá thành rẻ. Khi được kích hoạt, Bluetooth có thể tự động định vị những thiết bị khác có chung công nghệ trong vùng xung quanh và bắt đầu kết nối với chúng. Nó được định hướng sử dụng cho việc truyền dữ liệu lẫn tiếng nói.
 
-\subsection{Phụ lục}
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using `Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for `lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+\subsection{Quá trình phát triển}
+% TODO: nguồn wiki link chú thích bla bla bla
+Đặc tả Bluetooth được phát triển đầu tiên bởi Ericsson (hiện nay là Sony Ericsson và Ericsson Mobile Platforms), và sau đó được chuẩn hoá bởi Bluetooth Special Interest Group (SIG). Chuẩn được phát hành vào ngày 20 tháng 5 năm 1999. Ngày nay được công nhận bởi hơn 1800 công ty trên toàn thế giới. Được thành lập đầu tiên bởi Sony Ericsson, IBM, Intel, Toshiba và Nokia, sau đó cùng có sự tham gia của nhiều công ty khác với tư cách cộng tác hay hỗ trợ. Bluetooth có chuẩn là IEEE 802.15.1.
 
+\textbf{Các phiên bản Bluetooth:}
+
+% TODO: nguồn thegioididong.com
+1.    Bluetooth 1.0: Là phiên bản đầu tiên của chuẩn kết nối Bluetooth được đưa vào sử dụng với tốc độ truyền tải dữ liệu là 1Mbs, tuy nhiên thực tế tốc độ của phiên bản này chỉ đạt được mức 720kbs.
+
+2.    Bluetooth 2.0 + ERD: Phiên bản nâng cấp sau Bluetooth 1.0 được nâng cấp tốc độ truyền tải lên 2.1 Mbs cùng với chế độ truyền tải mới ERD (enhanced data rate). Phiên bản 2.1 được nâng cấp về tốc độ truyền tải nhưng lại hạn chế trên thiết bị sử dụng do ERD chỉ là chế độ tùy chọn, một số nhà sản xuất đã không đưa chế độ này vào sản phẩm của mình để giảm chi phí sản xuất.
+
+3.    Bluetooth 2.1+ ERD: Được nâng cấp từ Bluetooth 2.0 vào năm 2007 với thay đổi quan trọng như hiệu năng cao hơn, giảm điện năng tiêu thụ. Phiên bản này được sử dụng trên các thiết bị như điện thoại di độn, laptop, tai nghe ….. Tuy nhiên, Bluetooth 2.1 vẫn chưa cho người dùng truyền tải các tập tin có dung lượng lớn.
+
+4.    Bluetooth 3.0 + HS: Năm 2009 buetooth 3.0 ra đời với thay đổi lớn về tốc độ truyền tải, đạt 24Mbps ở phiên bản này các thiết bị có thể tương tác dễ dàng với nhau hơn, có thể tự dò tìm các thiết bị ở gần.
+
+5.    Bluetooth 4.0: Là sự kết hợp của các đời Bluetooth trước đó với nhau. Bluetooth 4.0 đạt tốc độ truyền tải lên đến 25Mbps, dễ dàng ghép đôi các thiết bị với nhau, hiệu năng tiêu thụ thấp. Đây là chuẩn Bluetooth được sử dụng trên hầu hết các thiết bị hiện nay.
+
+6.    Bluetooth 4.1 và 4.2: Là phiên bản ra đời đầu năm 2014 với nhiều cải tiến vượt bậc so với Bluetooth 4.0 như khả năng điều chống chồng chéo tín hiệu, kết nối thực sự thông minh và khả năng truyền dữ liệu độc lập mà không cần phụ thuôc vào trung tâm điều khiển. Phiên bản 4.2 được phát triển có khả năng truyền tải cao và bảo mật hơn, nhưng quan trọng hơn cả là cho phép các vi xử lý sử dụng chuẩn giao thức Ipv6 để truy cập trực tiếp vào internet.
+
+7.	Bluetooth 5.0: theo dự kiến sẽ bắt đầu xuất hiện trên các thiết bị thương mại vào cuối 2016 nay hoặc đầu năm 2017 (Q1). Bluetooth 5.0 có tầm phủ sóng tăng lên gấp 4 lần so với Bluetooth 4.2 hiện nay, còn tốc độ truyền dữ liệu thì tăng lên cao nhất là 2 lần. Việc mở rộng khả năng phủ sóng của Bluetooth sẽ giúp các thiết bị Internet of Things sẽ có thể giao tiếp với nhau cũng như với trạm điều khiển một cách dễ dàng hơn, vượt qua bức tường của một căn nhà bình thường, trong khi lại tăng tốc thu thập và truyền dữ liệu. Chuẩn Bluetooth mới cũng sẽ giúp các beacon và giải pháp nhận diện địa điểm trở nên thông minh, chính xác và phản hồi nhanh hơn với sự hiện diện của người dùng.
+
+% theo http://www.pcmag.com/news/345316/bluetooth-5-0-to-quadruple-range-double-speed
 %********************************** % Third Section  *************************************
-\section{Where does it come from?}  %Section - 1.3 
+\section{Tại sao chọn Bluetooth Low Energy (BLE)?}  %Section - 1.3 
 \label{section1.3}
+\begin{center}
+\begin{table}
+	\begin{tabular}{ |c|m{2cm}|m{2cm}|m{2cm}|m{2cm}| } 
+		\hline
+		  & \textbf{Bluetooth} & \textbf{BLE} & \textbf{Wifi} & \textbf{Zigbee} \\ 
+		  \hline
+		\textbf{Radio Frequency} &	2.4G &	2.4G &	2.4G &	2.4G \\ 
+		\hline
+		\textbf{Distance Range} &	10m	&>60m &	30m	& 10-100m \\ 
+		\hline
+		\textbf{Air Datarate} &	1-3Mbps &	1Mbps &	54Mbps &	250kbps \\
+		\hline
+		\textbf{Application Throughput} &	0.7-2.1Mbps &	305kbps &Depend &120kbps\\
+		\hline
+		\textbf{Security} &	64bit, 128bit &	128-bit & AES	SSID, WEP&	128-bit AES \\
+		\hline
+	\textbf{Power consumption}&	Low	&Very Low&	High&	Low \\
+	\hline
+	\textbf{Certification Body}&	Bluetooth SIG&	Bluetooth SIG&	IEEE802.11&	IEEE802.15.4 \\
+	\hline
+	\textbf{Network topology} &	Point-to-Point Scatternet&	Point-to-Point Star&	Point-to-Hub& 		Mesh, Ad-hoc\\
+		\hline
+		\end{tabular}
+	
+	\caption {Should be a caption}
+	\label{table:1.3.1}
+\end{table}
+	
+\end{center}
 
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from ``de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham
-
-``Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-Section 1.10.32 of ``de Finibus Bonorum et Malorum", written by Cicero in 45 BC: ``Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-
-1914 translation by H. Rackham: ``But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-
-Section 1.10.33 of ``de Finibus Bonorum et Malorum", written by Cicero in 45 BC: ``At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
-
-1914 translation by H. Rackham: ``On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."
 
 \nomenclature[z-DEM]{DEM}{Discrete Element Method}
 \nomenclature[z-FEM]{FEM}{Finite Element Method}
