@@ -15,7 +15,8 @@
 \section{Thiết kế sản phẩm}
 % Uncomment this line, when you have siunitx package loaded.
 %The SI Units for dynamic viscosity is \si{\newton\second\per\metre\squared}.
-\subsection{Tính năng sản phẩm}
+\textit{Thiết kế tính năng sản phẩm:}
+
 \label{feature}
 Sản phẩm Smart Keyring sẽ có các tính năng cơ bản như:
 
@@ -25,33 +26,87 @@ Sản phẩm Smart Keyring sẽ có các tính năng cơ bản như:
 
 • Hai chế độ báo hiệu bằng âm thanh hoặc ánh sáng đèn led hoặc cả 2: mục đích sử dụng trong nhiều trường hợp khác nhau như đêm tối, không gian yên tĩnh...
 
-\subsection{Các thiết bị phần cứng}
-%TODO các thiệt bị phần cứng, thêm hình vẽ mạch đồ vào
-Sử dụng module HM-10 dùng chip CC2541 vì có thể tìm được tại các cửa hàng thiết bị linh kiện
-Mo
-Atmel
-....
+\section{Sơ đồ hoạt động}
+\subsection{Tổng quát}
+Sơ đồ hoạt động tổng quát:
 
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{general}
+	\caption[Sơ đồ hoạt động tổng quát]{Sơ đồ hoạt động tổng quát}
+	\label{fig: general}
+\end{figure}
+
+Như hình \ref{fig: general}, thiết bị Smart Keyring giao tiếp với thiết bị di động thông qua module BLE HM-10 và được điều khiển bởi MCU ATmega328P đảm nhận chức năng quản lý I/O như nút ấn, loa báo hiệu và đèn cũng như là truyền nhận thông điệp với module HM10.
+
+\subsection{Nhận lệnh báo từ thiết bị di động}
+
+Chức năng tìm kiếm thiết bị được kích hoạt bởi thiết bị di động được mô tả ở hình \ref{fig: ring1}.
+
+Trình tự các hoạt động như sau:
+
+(1) Thiết bị di động gửi gói tin với nội dung yêu cầu phát tín hiệu báo tới module HM-10.
+
+(2) MCU ATmega328P nhận gói tin từ module HM-10 bằng giao thức UART với chế độ interrupt.
+
+(3) Loa và đèn báo hiệu được kích hoạt tùy theo nội dung gói tin: kích hoạt cả hai hoặc chỉ kích hoạt đèn báo hiệu
+
+(4*) Nút nhấn có chức năng ngắt chế độ báo hiệu khi cần thiết thông qua interrupt GPIO
+
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{ring1}
+	\caption[Sơ đồ hoạt động khi nhận lệnh báo từ thiết bị di động]{Sơ đồ hoạt động khi nhận lệnh báo từ thiết bị di động}
+	\label{fig: ring1}
+\end{figure}
+
+Sơ đồ hoạt động trên đúng với chức năng ngắt báo hiệu thiết bị được điều khiển bởi thiết bị di động, chỉ khác tại bước (3) là ngắt loa và đèn và không có bước (4).
+\subsection{Kích hoạt thiết bị di động bật chế độ báo hiệu}
+
+Chức năng kích hoạt thiết bị di động bật chế độ báo hiệu được mô tả ở hình \ref{fig: ring2}.
+
+Trình từ các hoạt động như sau:
+
+(1) MCU ATmega328P nhận tín hiệu điều khiển từ nút ấn thông qua interrupt GPIO
+
+(2) Module BLE HM-10 nhận gói tin điều khiển từ MCU ATmega328 thông qua UART
+
+(3) Thiết bị di động nhận gói tin truyền từ Module HM-10 và kích hoạt chế độ báo hiệu
+
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{ring2}
+	\caption[Sơ đồ kích hoạt thiết bị di động bật chế độ báo hiệu]{Sơ đồ kích hoạt thiết bị di động bật chế độ báo hiệu}
+	\label{fig: ring2}
+\end{figure}
+\newpage
+
+\subsection{Sơ đồ trạng thái hoạt động khi ngắt kết nối}
+Dựa theo tính năng sản phẩm ở mục \ref{feature}, sơ đồ trạng thái hoạt động được thiết kế ở hình \ref{fig: ble} và \ref{fig: blelost}
+
+	\begin{figure}[h]
+		\centering    
+		\includegraphics[width=1.0\textwidth]{ble}
+		\caption[Sơ đồ trạng thái trên thiết bị Smart Keyring]{Sơ đồ trạng thái trên thiết bị Smart Keyring}
+		\label{fig: ble}
+	\end{figure}
+	
+	\begin{figure}[h]
+		\centering    
+		\includegraphics[width=1.0\textwidth]{blelost}
+		\caption[Sơ đồ hoạt động trên thiết bị di động]{Sơ đồ hoạt động trên thiết bị di động}
+		\label{fig: blelost}
+	\end{figure}
 \newpage
 \section{Hiện thực phần cứng}
 \subsection{Mô hình hoạt động}
 Dựa theo tính năng sản phẩm ở mục \ref{feature}, mô hình ứng dụng khi bị thất lạc được thế kế như hình \ref{fig: ble}
-	\begin{figure}[h]
-		\centering    
-		\includegraphics[width=1.0\textwidth]{ble}
-		\caption[Sơ đồ hoạt động trên sản phẩm]{Sơ đồ hoạt động của ứng dụng}
-		\label{fig: ble}
-	\end{figure}
+
+
 \subsection{Hiện thực}
 \newpage
 \section{Hiện thực ứng dụng di động trên Android}
 \subsection{Mô hình hoạt động}
-Dựa theo tính năng sản phẩm ở mục \ref{feature}, mô hình ứng dụng khi bị thất lạc được thế kế như hình \ref{fig: blelost}
-	\begin{figure}[h]
-		\centering    
-		\includegraphics[width=1.0\textwidth]{blelost}
-		\caption[Sơ đồ hoạt động trên thiết bị di động]{Sơ đồ hoạt động của ứng dụng}
-		\label{fig: blelost}
-	\end{figure}
+
 \subsection{Các module trong ứng dụng Android}
 
