@@ -12,7 +12,7 @@
 
 
 %\section[Short title]{Reasonably long section title}
-\section{Thiết kế sản phẩm}
+\section{Thiết kế tính năng sản phẩm}
 % Uncomment this line, when you have siunitx package loaded.
 %The SI Units for dynamic viscosity is \si{\newton\second\per\metre\squared}.
 \textit{Thiết kế tính năng sản phẩm:}
@@ -29,15 +29,8 @@ Sản phẩm Smart Keyring sẽ có các tính năng cơ bản như:
 
 Tại thời điểm tìm hiểu và hiện thực đề tài NCKH, tại Việt Nam chỉ có module HM-10 có sử dụng chip BLE CC2540/2541 được phát triển thành board mạch hoàn chỉnh nên phần này chỉ nói về hướng phát triển với board mạch này.
 
-\begin{figure}[h]
-	\centering    
-	\includegraphics[width=1.0\textwidth]{hm10}
-	\caption[Module BLE HM-10]{Module BLE HM-10}
-	\label{fig: c2-hm10}
-\end{figure}
-
 \subsection{Phát triển thiết bị chỉ dựa vào SoC CC2540/2541}
-
+\label{dev}
 Về hướng này chúng ta sẽ phát triển lập trình thiết bị chỉ trên duy nhất 1 SoC CC2540/2541.
 
 \textbf{Ưu điểm}: 
@@ -135,37 +128,100 @@ Trình từ các hoạt động như sau:
 \subsection{Sơ đồ trạng thái hoạt động khi ngắt kết nối}
 Dựa theo tính năng sản phẩm ở mục \ref{feature}, sơ đồ trạng thái hoạt động được thiết kế ở hình \ref{fig: ble} và \ref{fig: blelost}
 
-	\begin{figure}[h]
+	\begin{figure}[!ht]
 		\centering    
 		\includegraphics[width=1.0\textwidth]{ble}
 		\caption[Sơ đồ trạng thái trên thiết bị Smart Keyring]{Sơ đồ trạng thái trên thiết bị Smart Keyring}
 		\label{fig: ble}
 	\end{figure}
 	
-	\begin{figure}[h]
+	\begin{figure}[!ht]
 		\centering    
 		\includegraphics[width=1.0\textwidth]{blelost}
 		\caption[Sơ đồ hoạt động trên thiết bị di động]{Sơ đồ hoạt động trên thiết bị di động}
 		\label{fig: blelost}
 	\end{figure}
+
 \newpage
+
 \section{Hiện thực phần cứng}
-\subsection{Thiết kế board mạch}
+\subsection{Lựa chọn linh kiện và thiết bị phần cứng}
+\textit{Sản phẩm hiện thực gồm 3 phần:}
+
+\textbf{Module giao tiếp không dây:}
+
+Tất nhiên yêu cầu tiên quyết của sản phẩm là việc giao tiếp không dây giữa các thiết bị, tiếp theo là việc làm sao để tiết kiệm năng lượng trên từng phần của sản phẩm. Thông qua tìm hiểu, nhóm đã phát hiện ra công nghệ truyền dữ liệu không dây trong khoảng cách ngắn phổ biển nhất hiện nay là công nghệ Bluetooth Low Energy. 
+
+Hiện nay, trên thị trường có rất nhiều loại mẫu mã và thiết kế cho module Bluetooth Low Energy từ nhiều hãng sản xuất khác nhau. Thời gian đầu lúc tiếp cận, nhóm đã lựa chọn mẫu phổ biến nhất trên thị trường hiện nay với giá thành tương đối hợp lí và có nguồn cung cấp rất gần trường ĐH Bách Khoa tp HCM. Đó là module Bluetooth BLE HM-10 của hãng JNHuamao Technology Company có xuất xứ từ Trung Quốc. Sau thời gian thử nghiệm và nghiên cứu với nhiều phiên bản của sản phẩm, nhóm nhận thấy module hoạt động tốt và ổn định, thông số kỹ thuật mà nhà sản xuất cung cấp gần đúng với các thông số kỹ thuật mà nhóm rút ra được trong quá trình thử nghiệm.
+
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{hm10}
+	\caption[Module BLE HM-10]{Module BLE HM-10}
+	\label{fig: c2-hm10}
+\end{figure}
+
+Thông số kỹ thuật của module: (do nhà sx cung cấp)
+
+• BT version: Bluetooth Specification V4.0 BLE.
+
+• Tần số hoạt động: 2.4GHz ISM band.
+
+• RF power: -23dbm, -6dbm, 0dbm, 6dbm.
+
+• Baudrate: hỗ trợ đến 230400, mặc định là 9600.
+
+• Nguồn: +2.5 - 3.3VDC 50mA.
+
+• Dòng tiêu thụ: Active mode 8.5mA, Sleep mod 50-200 uA.
+
+• Thực nghiệm cho thấy module có thể thực hiện truyền nhận trong khoảng cách 20m – 30m( tùy vào thiết bị di động).
+
+\textbf{Vi điều khiện trung tâm:}
+
+Vi điều khiển trung tâm cũng cần thỏa mản một số yêu cầu sau:
+
+• Điện áp hoạt động: 3.3V hoặc ít hơn.
+
+• Có ít nhất 1 kênh giao tiếp UART.
+
+• Tiết kiệm năng lượng nhiều nhất có thể.
+
+• Công cụ lập trình dễ tiếp cận và có bộ thư viện hỗ trợ tương đối đầy đủ.
+
+Với những yêu cầu trên, qua quá trình tìm hiểu và đúc kết kinh nghiệm từ trước, nhóm đã chọn được vi điều khiển thích hợp cho mô hình. Đó là vi điều khiển ATmega328p của hãng Atmel.
+
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{atmega}
+	\caption[MCU ATmega328P]{MCU ATmega328P}
+	\label{fig: atmega}
+\end{figure}
+\textbf{Các thông số kỹ thuật:}
+
+Core:	 AVR 8-bit
+
+Kích thước bộ nhớ FLASH:	 32 KB Flash
+
+Tần số hoạt động tối đa:	 20 MHz
+
+Các chuẩn giao tiếp:	 I²C, SPI, UART/USART
+
+Số lượng cổng GPIO:	 23
+
+Điện áp hoạt động:	 1.8V to 5.5V
+
+\textbf{Các thiết bị xuất nhập:}
+
+• LED nguồn: chức năng báo hiệu khi thiết bị đang hoạt động.
+
+• LED báo hiệu: chức năng bật tắt bằng ánh sáng LED khi có yêu cầu từ thiết bị di động.
+
+• Buzzer: chức năng phát âm thanh khi có yêu cầu từ thiết bị di động.
+
+• Nút bấm: chức năng kích hoạt thiết bị Smart Keyring gửi lệnh cho thiết bị di động báo chuông.
+
 Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được thiết kế như hình \ref{fig: schematic}
-
-Các thiết bị linh kiện bao gồm:
-
-• 01 MCU ATmega328P
-
-• 01 Module BLE HM-10
-
-• 01 LED báo hiệu
-
-• 01 Buzzer
-
-• 01 Nút bấm
-
-• Các tụ và trở bổ sung
 
 	\begin{figure}[!ht]
 		\centering    
@@ -173,9 +229,6 @@ Các thiết bị linh kiện bao gồm:
 		\caption[Schematic của thiết bị Smart Keyring]{Schematic của thiết bị Smart Keyring}
 		\label{fig: schematic}
 	\end{figure}
-	
-\subsection{Hiện thực thiết bị}
-
 
 
 \section{Hiện thực ứng dụng di động trên Android}

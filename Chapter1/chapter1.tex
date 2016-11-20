@@ -44,6 +44,21 @@ Chức năng:
 
 - Báo hiệu khi bị mất kết nối với sản phẩm móc khóa.
 
+\subsection{Tình hình nghiên cứu}
+
+• Tình hình nghiên cứu ngoài nước:
+
+- Thiết bị \href{www.thetrackr.com}{TrackR} 
+(\url{www.thetrackr.com}) : sử dụng công nghệ Bluetooth Low Energy, có chức năng tìm kiếm thiết bị và chống thất lạc để quên. Tuy nhiên hạn chế là chưa phân phối chính thức ở Việt Nam và giá thành còn khá cao so với mức sống của người Việt Nam.
+
+• Tình hình nghiên cứu trong nước:
+
+- Chưa thấy xuất hiện sản phẩm có chức năng tương tự sử dụng công nghệ BLE.
+
+- Có vài sản phẩm có chức năng gần giống sử dụng 2 thẻ tag RF để tìm nhau, chưa có chức năng cảnh báo khi mất kết nối (trường hợp để quên hoặc trộm mất)
+
+- Chưa có tài liệu nghiên cứu về lập trình trên hệ thống System on Chip, chỉ có hướng dẫn sử dụng module theo firmware sẵn có từ nhà sản xuất.
+
 \subsection{Mục tiêu - Phạm vi - Đối tượng nghiên cứu}
 
 Xuất phát từ các lý do trình bày ở trên, chúng tôi đã thực hiện đề tài “Thiết kế sản phẩm móc khóa thông minh (Smart Keyring) dựa trên nền tảng công nghệ Bluetooth Low Energy (BLE)”. Mục tiêu của đề tài là:
@@ -123,8 +138,7 @@ Có 4 loại thiết bị BLE (có thể gọi là chế độ hoạt động) �
 • \textbf{BLE Observer} là BLE Central nhưng chỉ nhận dữ liệu nhận dạng của các thiết bị xung quanh nhưng không bao giờ tạo kết nối
 
 • \textbf{BLE Broadcaster} là BLE Peripheral chỉ phát dữ liệu nhận dạng nhưng không bao giờ chấp nhận yêu cầu kết nối từ các BLE Central.
-\newpage
-
+ 
 \subsection{Cách thức hoạt động của BLE}
 %TODO HTeletronic
 Theo chuẩn BLE định nghĩa thì các thiết bị BLE có 4 hoạt động cơ bản như sau:
