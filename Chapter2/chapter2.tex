@@ -25,6 +25,57 @@ Sản phẩm Smart Keyring sẽ có các tính năng cơ bản như:
 • Báo hiệu khi kích hoạt chức năng tìm kiếm: cho phép người dùng định vị thiết bị còn lại trong phạm vi kết nối.
 
 • Hai chế độ báo hiệu bằng âm thanh hoặc ánh sáng đèn led hoặc cả 2: mục đích sử dụng trong nhiều trường hợp khác nhau như đêm tối, không gian yên tĩnh...
+\section{Các hướng tiếp cận vấn đề}
+
+Tại thời điểm tìm hiểu và hiện thực đề tài NCKH, tại Việt Nam chỉ có module HM-10 có sử dụng chip BLE CC2540/2541 được phát triển thành board mạch hoàn chỉnh nên phần này chỉ nói về hướng phát triển với board mạch này.
+
+\begin{figure}[h]
+	\centering    
+	\includegraphics[width=1.0\textwidth]{hm10}
+	\caption[Module BLE HM-10]{Module BLE HM-10}
+	\label{fig: c2-hm10}
+\end{figure}
+
+\subsection{Phát triển thiết bị chỉ dựa vào SoC CC2540/2541}
+
+Về hướng này chúng ta sẽ phát triển lập trình thiết bị chỉ trên duy nhất 1 SoC CC2540/2541.
+
+\textbf{Ưu điểm}: 
+
+• Có thể thu nhỏ thiết kế đến mức tối thiểu
+
+• Viết ứng dụng ngay trên nền tảng BLE sẽ tiết kiệm tối đa năng lượng tiêu thụ.
+
+\textbf{Nhược điểm}: 
+
+• Bị hạn chế về khả năng phát triển cả về phần cứng lẫn phần mềm.
+
+• Không tìm được source code firmware cho module.
+
+• Không có tài liệu chính thống nào hướng dẫn các bước lập trình cho vi điều khiển CC2540/2541 được tích hợp trên module HM-10
+
+• Nhà sản xuất không công khai thiết kế mạch của sản phẩm HM-10
+
+• Chỉ có duy nhất 1 phần mềm hỗ trợ các gói thư viện lập trình cho CC2540/2541 là IAR Embedded Workbench for 8051 thuộc Texas Instrument nhưng bản quyền cho phần mềm có giá quá cao và các thư viện này sử dụng mã nguồn đóng nên không chuyển sang các phần mềm khác được.
+
+\textit{Vì những cản trở đó, nhóm quyết định chuyển sang phương pháp tiếp cận khác đơn giản và khả thi hơn.}
+
+\subsection{Kết hợp MCU và Module BLE HM-10}
+Cách tiếp cận này khá quen thuộc với đa số hệ thống và sản phẩm hiện nay bao gồm 1 vi điều khiển trung tâm: chứa toàn bộ chương trình hoạt động của sản phẩm và các thiết bị ngoại vi (sensor, các module giao tiếp rf, Bluetooth…)
+
+\textbf{Ưu điểm: }
+
+• Dễ tiếp cận, do người hiện thực có thể kiểm soát được công nghệ mình sử dụng
+
+• Tùy biến các loại vi điều khiển sao cho thích hợp nhất đối với yêu cầu đề tài. Các vi điều khiển riêng rẻ hiện nay rất đa dạng chủng loại và chức năng, đi kèm theo nó là hệ thống hỗ trợ cực kì tốt từ nhà sản xuất về tài liệu, môi trường lập trình, các forum trao đổi. điển hình là các thương hiệu Atmel, Microchip…
+
+\textbf{Nhược điểm:} 
+
+• Đối nghịch lại với ưu điểm của cách tiếp cận đầu tiên thì hướng tiếp cận này sẽ cần nhiều không gian hơn (thêm 1 vi điều khiển).
+
+• Làm cho hệ thống mất đi tính linh động và gọn nhẹ so với tính chất sản phẩm cũng như là năng lượng tiêu thụ không được tối ưu.
+
+• Thêm 1 vi điều khiển tương đương với việc thêm 1 nguồn tiêu thụ điện, giảm thời gian hoạt động của sản phẩm.
 
 \section{Sơ đồ hoạt động}
 \subsection{Tổng quát}
@@ -99,14 +150,48 @@ Dựa theo tính năng sản phẩm ở mục \ref{feature}, sơ đồ trạng t
 	\end{figure}
 \newpage
 \section{Hiện thực phần cứng}
-\subsection{Mô hình hoạt động}
-Dựa theo tính năng sản phẩm ở mục \ref{feature}, mô hình ứng dụng khi bị thất lạc được thế kế như hình \ref{fig: ble}
+\subsection{Thiết kế board mạch}
+Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được thiết kế như hình \ref{fig: schematic}
+
+Các thiết bị linh kiện bao gồm:
+
+• 01 MCU ATmega328P
+
+• 01 Module BLE HM-10
+
+• 01 LED báo hiệu
+
+• 01 Buzzer
+
+• 01 Nút bấm
+
+• Các tụ và trở bổ sung
+
+	\begin{figure}[!ht]
+		\centering    
+		\includegraphics[width=1.0\textwidth]{schematic}
+		\caption[Schematic của thiết bị Smart Keyring]{Schematic của thiết bị Smart Keyring}
+		\label{fig: schematic}
+	\end{figure}
+	
+\subsection{Hiện thực thiết bị}
 
 
-\subsection{Hiện thực}
-\newpage
+
 \section{Hiện thực ứng dụng di động trên Android}
-\subsection{Mô hình hoạt động}
 
-\subsection{Các module trong ứng dụng Android}
+\subsection{Các khái niệm trong lập trình BLE trên Android}
+%TODO: https://developer.android.com/guide/topics/connectivity/bluetooth-le.html
+Dưới đây là những khái niệm chính về BLE được sử dụng:
 
+\textbf{Generic Attribute Profile (GATT) -  Cấu hình thuộc tính chung }— Cấu hình GATT là đặc điểm kỹ thuật chung cho việc truyền nhận các gói dữ liệu nhỏ được biết đến như là các "đặc tính" trên đường truyền BLE. Tất cả các cấu hình ứng dụng BLE đều dựa trên GATT.
+
+\textbf{Attribute Protocol (ATT) - Thuộc tính của giao thức}—GATT được xây dựng bên trên lớp ATT, thường được nhắc đến là GATT/ATT. ATT được tối ưu hóa trên các thiết bị BLE và sử dụng ít dữ liệu nhất có thể. Các thuộc tính này được định danh duy nhất bởi Universally Unique Identifier (UUID), là 1 chuỗi định danh dưới chuẩn 128-bit để định danh thông tin duy nhất. Các thuộc tính được truyền bởi ATT được định dạng dưới các characteristics và services.
+
+\textbf{Characteristic}—A characteristic contains a single value and 0-n descriptors that describe the characteristic's value. A characteristic can be thought of as a type, analogous to a class. 
+
+\textbf{Descriptor}—Descriptors are defined attributes that describe a characteristic value. For example, a descriptor might specify a human-readable description, an acceptable range for a characteristic's value, or a unit of measure that is specific to a characteristic's value.
+
+\textbf{Service}— Service là một gói tổng hợp các characteristic. Ví dụ, ta có thể có service gọi là "Theo dõi nhịp tim" vừa bao gồm các characteristic như "đo nhịp tim". Danh sách các cấu hình GATT và service có thể tìm thấy tại bluetooth.org
+
+\subsection{Phát triển ứng dụng Android}
