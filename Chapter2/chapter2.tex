@@ -49,7 +49,7 @@ Về hướng này chúng ta sẽ phát triển lập trình thiết bị chỉ 
 
 • Nhà sản xuất không công khai thiết kế mạch của sản phẩm HM-10
 
-• Chỉ có duy nhất 1 phần mềm hỗ trợ các gói thư viện lập trình cho CC2540/2541 là IAR Embedded Workbench for 8051 thuộc Texas Instrument nhưng bản quyền cho phần mềm có giá quá cao và các thư viện này sử dụng mã nguồn đóng nên không chuyển sang các phần mềm khác được.
+• Chỉ có duy nhất 1 phần mềm hỗ trợ các gói thư viện lập trình cho CC2540/2541 là IAR Embedded Workbench for 8051 \cite{iar} hỗ trợ Texas Instrument nhưng bản quyền cho phần mềm có giá quá cao và các thư viện này sử dụng mã nguồn đóng nên không chuyển sang các phần mềm khác được.
 
 \textit{Vì những cản trở đó, nhóm quyết định chuyển sang phương pháp tiếp cận khác đơn giản và khả thi hơn.}
 
@@ -126,33 +126,33 @@ Trình từ các hoạt động như sau:
 \newpage
 
 \subsection{Sơ đồ trạng thái hoạt động khi ngắt kết nối}
+%TODO: xem lại phần này
 Dựa theo tính năng sản phẩm ở mục \ref{feature}, sơ đồ trạng thái hoạt động được thiết kế ở hình \ref{fig: ble} và \ref{fig: blelost}
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering    
 		\includegraphics[width=1.0\textwidth]{ble}
 		\caption[Sơ đồ trạng thái trên thiết bị Smart Keyring]{Sơ đồ trạng thái trên thiết bị Smart Keyring}
 		\label{fig: ble}
 	\end{figure}
 	
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering    
 		\includegraphics[width=1.0\textwidth]{blelost}
 		\caption[Sơ đồ hoạt động trên thiết bị di động]{Sơ đồ hoạt động trên thiết bị di động}
 		\label{fig: blelost}
 	\end{figure}
 
-\newpage
-
 \section{Hiện thực phần cứng}
 \subsection{Lựa chọn linh kiện và thiết bị phần cứng}
+
 \textit{Sản phẩm hiện thực gồm 3 phần:}
 
 \textbf{Module giao tiếp không dây:}
 
 Tất nhiên yêu cầu tiên quyết của sản phẩm là việc giao tiếp không dây giữa các thiết bị, tiếp theo là việc làm sao để tiết kiệm năng lượng trên từng phần của sản phẩm. Thông qua tìm hiểu, nhóm đã phát hiện ra công nghệ truyền dữ liệu không dây trong khoảng cách ngắn phổ biển nhất hiện nay là công nghệ Bluetooth Low Energy. 
 
-Hiện nay, trên thị trường có rất nhiều loại mẫu mã và thiết kế cho module Bluetooth Low Energy từ nhiều hãng sản xuất khác nhau. Thời gian đầu lúc tiếp cận, nhóm đã lựa chọn mẫu phổ biến nhất trên thị trường hiện nay với giá thành tương đối hợp lí và có nguồn cung cấp rất gần trường ĐH Bách Khoa tp HCM. Đó là module Bluetooth BLE HM-10 của hãng JNHuamao Technology Company có xuất xứ từ Trung Quốc. Sau thời gian thử nghiệm và nghiên cứu với nhiều phiên bản của sản phẩm, nhóm nhận thấy module hoạt động tốt và ổn định, thông số kỹ thuật mà nhà sản xuất cung cấp gần đúng với các thông số kỹ thuật mà nhóm rút ra được trong quá trình thử nghiệm.
+Hiện nay, trên thị trường có rất nhiều loại mẫu mã và thiết kế cho module Bluetooth Low Energy từ nhiều hãng sản xuất khác nhau. Thời gian đầu lúc tiếp cận, nhóm đã lựa chọn mẫu phổ biến nhất trên thị trường hiện nay với giá thành tương đối hợp lí. Đó là module Bluetooth BLE HM-10 của hãng JNHuamao Technology Company có xuất xứ từ Trung Quốc. Sau thời gian thử nghiệm và nghiên cứu với nhiều phiên bản của sản phẩm, nhóm nhận thấy module hoạt động tốt và ổn định, thông số kỹ thuật mà nhà sản xuất cung cấp gần đúng với các thông số kỹ thuật mà nhóm rút ra được trong quá trình thử nghiệm.
 
 \begin{figure}[h]
 	\centering    
@@ -162,6 +162,8 @@ Hiện nay, trên thị trường có rất nhiều loại mẫu mã và thiết
 \end{figure}
 
 Thông số kỹ thuật của module: (do nhà sx cung cấp)
+
+• SoC: CC2540/2541 (tùy theo đợt sản xuất)
 
 • BT version: Bluetooth Specification V4.0 BLE.
 
@@ -189,14 +191,15 @@ Vi điều khiển trung tâm cũng cần thỏa mản một số yêu cầu sau
 
 • Công cụ lập trình dễ tiếp cận và có bộ thư viện hỗ trợ tương đối đầy đủ.
 
-Với những yêu cầu trên, qua quá trình tìm hiểu và đúc kết kinh nghiệm từ trước, nhóm đã chọn được vi điều khiển thích hợp cho mô hình. Đó là vi điều khiển ATmega328p của hãng Atmel.
+Với những yêu cầu trên, qua quá trình tìm hiểu và đúc kết kinh nghiệm từ trước, nhóm đã chọn được vi điều khiển thích hợp cho mô hình. Đó là vi điều khiển ATmega328P của hãng Atmel.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering    
 	\includegraphics[width=1.0\textwidth]{atmega}
 	\caption[MCU ATmega328P]{MCU ATmega328P}
 	\label{fig: atmega}
 \end{figure}
+
 \textbf{Các thông số kỹ thuật:}
 
 Core:	 AVR 8-bit
@@ -223,7 +226,7 @@ Số lượng cổng GPIO:	 23
 
 Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được thiết kế như hình \ref{fig: schematic}
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 		\centering    
 		\includegraphics[width=1.0\textwidth]{schematic}
 		\caption[Schematic của thiết bị Smart Keyring]{Schematic của thiết bị Smart Keyring}
@@ -234,17 +237,19 @@ Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được th
 \section{Hiện thực ứng dụng di động trên Android}
 
 \subsection{Các khái niệm trong lập trình BLE trên Android}
-%TODO: https://developer.android.com/guide/topics/connectivity/bluetooth-le.html
-Dưới đây là những khái niệm chính về BLE được sử dụng:
+Dưới đây là những khái niệm chính về BLE được sử dụng: \cite{deva}
 
 \textbf{Generic Attribute Profile (GATT) -  Cấu hình thuộc tính chung }— Cấu hình GATT là đặc điểm kỹ thuật chung cho việc truyền nhận các gói dữ liệu nhỏ được biết đến như là các "đặc tính" trên đường truyền BLE. Tất cả các cấu hình ứng dụng BLE đều dựa trên GATT.
 
 \textbf{Attribute Protocol (ATT) - Thuộc tính của giao thức}—GATT được xây dựng bên trên lớp ATT, thường được nhắc đến là GATT/ATT. ATT được tối ưu hóa trên các thiết bị BLE và sử dụng ít dữ liệu nhất có thể. Các thuộc tính này được định danh duy nhất bởi Universally Unique Identifier (UUID), là 1 chuỗi định danh dưới chuẩn 128-bit để định danh thông tin duy nhất. Các thuộc tính được truyền bởi ATT được định dạng dưới các characteristics và services.
 
-\textbf{Characteristic}—A characteristic contains a single value and 0-n descriptors that describe the characteristic's value. A characteristic can be thought of as a type, analogous to a class. 
+\textbf{Characteristic -  Đặc tính}— Bao gồm một giá trị và 0-n các khóa để miêu tả giá trị của đặc tính. Một đặc tính có thể xem như là 1 kiểu tương tự như lớp.
 
-\textbf{Descriptor}—Descriptors are defined attributes that describe a characteristic value. For example, a descriptor might specify a human-readable description, an acceptable range for a characteristic's value, or a unit of measure that is specific to a characteristic's value.
+\textbf{Descriptor - Khóa mô tả}— Khoá mô tả được xác định để miêu tả giá trị đặc tính. Thí dụ, một khóa mô tả có thể đọc được bởi con người, thuộc phạm vi giá trị của đặc tính hoặc một giá trị đo cụ thể của một giá trị đặc tính nào đó.
 
-\textbf{Service}— Service là một gói tổng hợp các characteristic. Ví dụ, ta có thể có service gọi là "Theo dõi nhịp tim" vừa bao gồm các characteristic như "đo nhịp tim". Danh sách các cấu hình GATT và service có thể tìm thấy tại bluetooth.org
+\textbf{Service - Dịch vụ}— Service là một gói tổng hợp các đặc tính. Ví dụ, ta có thể có dịch vụ gọi là "Theo dõi nhịp tim" vừa bao gồm các đặc tính như "đo nhịp tim". Danh sách các cấu hình GATT và dịch vụ có thể tìm thấy tại bluetooth.org.
 
 \subsection{Phát triển ứng dụng Android}
+%TODO: bổ sung hình giao diện ứng dụng
+
+* bổ sung thêm sau, phát triển từ \cite{blegatt}
