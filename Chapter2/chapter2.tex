@@ -232,8 +232,100 @@ Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được th
 		\caption[Schematic của thiết bị Smart Keyring]{Schematic của thiết bị Smart Keyring}
 		\label{fig: schematic}
 	\end{figure}
+	
+Mạch thiết bị thử nghiệm theo schematic như hình \ref{fig: keydraft}
 
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.5\textwidth]{keydraft}
+		\caption[Mạch thử nghiệm]{Mạch thử nghiệm}
+		\label{fig: keydraft}
+	\end{figure}
 
+Kết quả thử nghiệm giao tiếp và các thiết bị IO hoạt động tốt nên tiến hành đặt mạch và làm mạch chính thức ở hình \ref{fig: key1} và \ref{fig: key2}
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.5\textwidth]{key1}
+		\caption[Mặt trước mạch thiết bị]{Mặt trước mạch thiết bị}
+		\label{fig: key1}
+	\end{figure}	
+	
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.5\textwidth]{key2}
+		\caption[Mặt sau mạch thiết bị]{Mặt sau mạch thiết bị}
+		\label{fig: key2}
+	\end{figure}	
+	
+\subsection{Lập trình firmware cho thiết bị}
+
+Tận dụng tính đơn giản của sản phẩm ứng dụng, các chức năng của sản phẩm được lập trình sao cho việc xử lí các input và output được thực hiện hoàn toàn bằng interrupt. Như vậy, ta sẽ không cần hiện thực thêm chương trình chính và có thể đưa vi điều khiển vào chế độ sleep mode, cụ thể hơn là Idle mode. Từ đó giúp hệ thống tiết kiệm năng lượng hơn.
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=1\textwidth]{sleep}
+		\caption[Các chế độ sleep mode khác nhau và khả năng hoạt động của từng chế độ]{Các chế độ sleep mode khác nhau và khả năng hoạt động của từng chế độ}
+		\label{fig: sleep}
+	\end{figure}
+		
+Khi MCU đi vào Idle mode, CPU sẽ ngừng hoạt động nhưng các bộ USART, SPI, Timer/Counters, hệ thống Interrupt vẫn sẽ tiếp tục hoạt động.
+Idle mode cho phép MCU ‘wake up’ khi xảy ra ngắt ngoài cũng như ngắt trong từ USART Receive, Timer Overflow…
+
+\textbf{Hiện thực interrupt}
+
+Như được đề cập ở trên, việc hiện thực chương trình cho ứng dụng cũng là hiện thực việc xử lí ở các interrupt, bao gồm USART Receive Interrupt và External Inerrupt.
+
+\textbf{USART Receive Interrupt}
+
+\textit{Xảy ra khi nhận được dữ liệu bất kì từ UART:} Dữ liệu này vi điều khiển nhận được thông qua module Bluetooth gửi từ thiết bị di động. Nếu dữ liệu nhận được là ‘R’, chương trình sẽ cho active chân kết nối với chuông. Nếu dữ liệu nhận được là ‘L’, chương trình cho active chân kết nối đến đèn. Ngoài ra, chương trình sẽ không có phản hồi nào khác. Chức năng trên được biểu diễn dưới dạng code:
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=1\textwidth]{int}
+		\label{fig: int}
+	\end{figure}
+	
+\textbf{External Inerrupt}
+
+\textit{Xảy ra khi nhận input từ nút nhấn hoặc tín hiệu disconnect từ module Bluetooth):}
+Mỗi khi có interrupt từ nút nhấn, chương trình sẽ cho truyền kí tự ‘R’ đến module Bluetooth, từ đó truyền đến thiết bị di động để phát lệnh đỗ chuông.
+Khi có interrupt từ module Bluetooth, việc này xảy ra chỉ khi có 1 thiết bị đang kết nối với module Bluetooth đột nhiên mất kết nối. Khi đó, chương trình sẽ điều khiển chân kết nối với chuông để phát tín hiệu mất kết nối được thể hiện bằng đoạn code:
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.8\textwidth]{baud}
+		\caption[Thiết lập baudrate trên HM-10]{Thiết lập baudrate trên HM-10}		
+		\label{fig: baud}
+	\end{figure}
+
+\textbf{Tùy chình baudrate}
+
+Do tính chất hoạt động của sản phẩm đơn giản, hàm lượng dữ liệu truyền nhận giữa các thiết bị ít và không cần đòi hỏi tốc độ quá nhanh, việc hạ thấp baudrate sẽ giúp sản phẩm tiết kiệm năng lượng hơn. Thực tế, mỗi lần cho phát 1 lệnh bất kì giữa 2 thiết bị (smart keyring và tb di động) thì một bên chỉ truyền 1 kí tự (‘L’, ‘R’) để cho biết bên nhận phải phát sáng đèn hay  đỗ chuông. Vì lí do đó, nhóm quyết định hạ thấp baudrate đến mức nhỏ nhất mà module Bluetooth cho phép: 2400Hz
+Việc điều chỉnh baudrate cho module Bluetooth khá đơn giản, chỉ cần gửi lệnh theo đúng cú pháp AT+BAUD?
+Giá trị thay vào ? sẽ tương ứng với tần số mình cần điều chỉnh
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=1\textwidth]{baud}
+		\label{fig: baud}
+	\end{figure}
+
+Như vậy, ta chỉ cần gửi lệnh \textbf{AT+BAUD6}. Nếu module Bluetooth phản hồi lại bằng lệnh OK+SET:6 thì ta đã thiết lập thành công \textbf{Baudrate 2400} cho thiết bị
+
+Điều chỉnh tần số xung clock hoạt động của vi điều khiển.
+Tốc độ xử lí càng nhanh thì đi đôi với việc tiêu tốn năng lượng càng nhiều. Để hạn chế điều này, nhóm tìm cách hạ thấp tầng số xung clock hoạt động của vi điều khiển đến mức thấp nhất có thể (128KHz). Và với công việc chính của vi điều khiển là giao tiếp UART ở tần số 2400, thì tầng số xung clock này hoàn toàn có thể đáp ứng được theo công thức sau: 
+
+\textbf{UBRRn = FOSC/(16BAUD) – 1}
+
+UBRRn: giá trị cần tính để gán vào thanh ghi
+FOSC: tần số xung clock hoạt động của vi điều khiển
+BAUD: Baud rate hoạt động khi truyền nhận USART
+
+Thay các giá trị cần tính vào ta được:
+
+\textbf{UBRRn = 128000/(16*2400)-1 = 2.33 > 0}
+
+Do đó việc sử dụng tần số xung clock thấp nhất (128KHz) là hoàn toàn hợp lí, đảm bảo được việc truyền nhận UART trong khi tiết kiệm năng lượng đáng kể so với việc sử dụng tần số cao hơn.
 \section{Hiện thực ứng dụng di động trên Android}
 
 \subsection{Các khái niệm trong lập trình BLE trên Android}
@@ -299,7 +391,7 @@ Sau đó ta chọn thiết bị BLE để kết nối, ở đây thiết bị Sm
 	
 	• Stop: tắt báo hiệu bằng âm thanh trên thiết bị di động sau khi mất kết nối với thiết bị Smart Keyring.
 	
-	Để sử dụng các chức năng trên, ta cần chọn service 0000ffe0-0000-1000-8000-00805f9b34fb và characteristic 0000ffe1-0000-1000-8000-00805f9b34fb - tức là service và characteristic của chức năng đọc truyền nhận dữ liệu thông qua kết nối Bluetooth.
+	Để sử dụng các chức năng trên, ta cần chọn service \textbf{0000ffe0-0000-1000-8000-00805f9b34fb} và characteristic \textbf{0000ffe1-0000-1000-8000-00805f9b34fb} - tức là service và characteristic của chức năng đọc truyền nhận dữ liệu thông qua kết nối Bluetooth.
 	
-	Demo ứng dụng và đề tài xem thêm tại: 
+	%Demo ứng dụng và đề tài xem thêm tại: 
 	%TODO: bỏ link utube
