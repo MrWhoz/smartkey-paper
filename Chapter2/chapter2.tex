@@ -293,9 +293,8 @@ Khi có interrupt từ module Bluetooth, việc này xảy ra chỉ khi có 1 th
 
 	\begin{figure}[H]
 		\centering    
-		\includegraphics[width=0.8\textwidth]{baud}
-		\caption[Thiết lập baudrate trên HM-10]{Thiết lập baudrate trên HM-10}		
-		\label{fig: baud}
+		\includegraphics[width=0.8\textwidth]{int2}
+		\label{fig: int2}
 	\end{figure}
 
 \textbf{Tùy chình baudrate}
@@ -306,7 +305,7 @@ Giá trị thay vào ? sẽ tương ứng với tần số mình cần điều c
 
 	\begin{figure}[H]
 		\centering    
-		\includegraphics[width=1\textwidth]{baud}
+		\includegraphics[width=0.7\textwidth]{baud}
 		\label{fig: baud}
 	\end{figure}
 
@@ -317,9 +316,11 @@ Tốc độ xử lí càng nhanh thì đi đôi với việc tiêu tốn năng l
 
 \textbf{UBRRn = FOSC/(16BAUD) – 1}
 
-UBRRn: giá trị cần tính để gán vào thanh ghi
-FOSC: tần số xung clock hoạt động của vi điều khiển
-BAUD: Baud rate hoạt động khi truyền nhận USART
+\textit{UBRRn}: giá trị cần tính để gán vào thanh ghi
+
+\textit{FOSC}: tần số xung clock hoạt động của vi điều khiển
+
+\textit{BAUD}: Baud rate hoạt động khi truyền nhận USART
 
 Thay các giá trị cần tính vào ta được:
 
@@ -350,6 +351,44 @@ Nhóm chúng tôi trong quá trình tìm hiểu đã nhận thấy phù hợp v�
 
 %TODO: bỏ các file code và chức năng
 
+Ứng dụng lập trình dựa theo 4 file chính:
+
+\textit{DeviceScanActivity.java:} chức năng tìm kiếm và hiện thị thiết bị BLE
+
+\textit{DeviceControlActivity.java:} chức năng quản lý kết nối và hiển thị các thông tin về trạng thái kết nối và các service đang có.
+
+\textit{BluetoothLeService.java:} quản lý và điều khiển các service
+
+Cơ chế hoạt động của lệnh gửi ký tự qua BLE trên Android:
+
+\begin{lstlisting}
+	// BluetoothLeService.java
+    public void ring(){
+	    char sendC = 'R'; // gan ky tu can gui la 'R'
+	    mGattCharacteristics.setValue(String.valueOf(sendC)); // gan ky tu can gui cho characteristic
+	    mBluetoothGatt.writeCharacteristic(mGattCharacteristics); // gui ky tu thong qua GATT BLE
+	    Log.d("Ring function Call", "Service");
+    }
+\end{lstlisting}
+
+Xử lý khi mất kết nối: các hoạt động khi kết nối và mất kết nối được quản lý với \textbf{BroadcastReceiver()} bao gồm các giá trị \textbf{BluetoothLeService}. Khi các giá trị này thay đổi thì sẽ dẫn tới các hoạt động tương ứng:
+
+\begin{lstlisting}
+	// DeviceControlActivity.java
+ BroadcastReceiver() {
+  	@Override
+  	public void onReceive(Context context, Intent intent) {
+  		if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+  			mConnected = true;
+  			updateConnectionState(R.string.connected);
+  			invalidateOptionsMenu();
+  		} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)){
+	  		mp=MediaPlayer.create(this,R.raw.noti);
+	  		mp.start();
+  		}
+	};
+\end{lstlisting}
+Và giao diện ứng dụng được thiết kế:
 
 	\begin{figure}[H]
 		\centering    
@@ -392,6 +431,7 @@ Sau đó ta chọn thiết bị BLE để kết nối, ở đây thiết bị Sm
 	• Stop: tắt báo hiệu bằng âm thanh trên thiết bị di động sau khi mất kết nối với thiết bị Smart Keyring.
 	
 	Để sử dụng các chức năng trên, ta cần chọn service \textbf{0000ffe0-0000-1000-8000-00805f9b34fb} và characteristic \textbf{0000ffe1-0000-1000-8000-00805f9b34fb} - tức là service và characteristic của chức năng đọc truyền nhận dữ liệu thông qua kết nối Bluetooth.
-	
+
+\textit{Source code có thể xem tại: } https://github.com/MrWhoz/ble-smartlkey
 	%Demo ứng dụng và đề tài xem thêm tại: 
 	%TODO: bỏ link utube
