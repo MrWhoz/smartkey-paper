@@ -237,6 +237,7 @@ Theo như yêu cầu chức năng ở mục \ref{feature}, schematic được th
 \section{Hiện thực ứng dụng di động trên Android}
 
 \subsection{Các khái niệm trong lập trình BLE trên Android}
+\label{sec: bleterm}
 Dưới đây là những khái niệm chính về BLE được sử dụng: \cite{deva}
 
 \textbf{Generic Attribute Profile (GATT) -  Cấu hình thuộc tính chung }— Cấu hình GATT là đặc điểm kỹ thuật chung cho việc truyền nhận các gói dữ liệu nhỏ được biết đến như là các "đặc tính" trên đường truyền BLE. Tất cả các cấu hình ứng dụng BLE đều dựa trên GATT.
@@ -251,5 +252,54 @@ Dưới đây là những khái niệm chính về BLE được sử dụng: \ci
 
 \subsection{Phát triển ứng dụng Android}
 %TODO: bổ sung hình giao diện ứng dụng
+Ứng dụng Android được phát triển từ nguồn ứng dụng mở android-BluetoothLeGatt\cite{blegatt} được cung cấp bởi Google. Ứng dụng này có chức năng demo thiết lập kết nối và nhận dữ liệu theo chuẩn BLE.
 
-* bổ sung thêm sau, phát triển từ \cite{blegatt}
+Nhóm chúng tôi trong quá trình tìm hiểu đã nhận thấy phù hợp với đề tài và có thể phát triển chức năng cảnh báo khi mất kết nối và báo hiệu để thiết bị Smart Keyring kích hoạt buzzer/led.
+
+%TODO: bỏ các file code và chức năng
+
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.6\textwidth]{androidoff}
+		\caption[Giao diện kiểm tra BLE]{Giao diện kiểm tra BLE}
+		\label{fig: androidoff}
+	\end{figure}
+Khi khởi động ứng dụng di động, chương trình sẽ kiểm tra thiết bị di động đã bật chế độ Bluetooth chưa và chọn để bắt đầu sử dụng như hình \ref{fig: androidoff}
+
+Nếu thiết bị di động đã bật sẵn chế độ kết nối Bluetooth thì giao diện \ref{fig: androidoff} sẽ không hiện ra.
+
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.6\textwidth]{android1}
+		\caption[Giao diện scan thiết bị BLE]{Giao diện scan thiết bị BLE}
+		\label{fig: android1}
+	\end{figure}
+Sau đó ta chọn thiết bị BLE để kết nối, ở đây thiết bị Smart Keyring sử dụng module HM-10 với thiết lập tên hiển thị mặc định là HMSoft. 
+	\begin{figure}[H]
+		\centering    
+		\includegraphics[width=0.6\textwidth]{android2}
+		\caption[Giao diện chính của ứng dụng di động]{Giao diện chính của ứng dụng di động}
+		\label{fig: android2}
+	\end{figure}
+	
+	Sau khi kết nối, chúng ta sẽ có những thông tin như:
+	
+	• Device address: địa chỉ MAC của chip CC2540/2541.
+	
+	• State: Connected hoặc Disconnected -  báo trạng thái kết nối giữa ứng dụng và thiết bị.
+	
+	• Các service là các characteristic (xem thêm tại \ref{sec: bleterm} ): vì ứng dụng di động đang trong quá trình tìm hiểu và phát triển nên hiển thị các uuid để dễ theo dõi.
+	
+	Ngoài ra còn có các nút chức năng:
+	
+	• Ring: gửi yêu cầu bật/tắt báo hiệu bằng buzzer tới thiết bị Smart Keyring.
+	
+	• Light: gửi yêu cầu bật/tắt báo hiệu bằng LED tới thiết bị Smart Keyring.
+	
+	• Stop: tắt báo hiệu bằng âm thanh trên thiết bị di động sau khi mất kết nối với thiết bị Smart Keyring.
+	
+	Để sử dụng các chức năng trên, ta cần chọn service 0000ffe0-0000-1000-8000-00805f9b34fb và characteristic 0000ffe1-0000-1000-8000-00805f9b34fb - tức là service và characteristic của chức năng đọc truyền nhận dữ liệu thông qua kết nối Bluetooth.
+	
+	Demo ứng dụng và đề tài xem thêm tại: 
+	%TODO: bỏ link utube
